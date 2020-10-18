@@ -9,6 +9,7 @@ export default class SignupCard extends Component {
 
   handleSignup(event) {
     event.preventDefault();
+    
   }
 
   render() {
