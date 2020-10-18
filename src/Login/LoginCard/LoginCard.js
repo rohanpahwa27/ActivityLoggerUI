@@ -1,14 +1,25 @@
 import React, { Component } from "react";
 import "./LoginCard.css";
-import { Form, Button, Container, Row, Col, Collapse } from "react-bootstrap";
+import api from "../../Api/api.js";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 
 export default class LoginCard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  handleLogin(event) {
+  async handleLogin(event) {
     event.preventDefault();
+    const email = event.target.elements.email.value;
+    const password = event.target.elements.password.value;
+    const firstName = event.target.elements.firstName.value;
+    const lastName = event.target.elements.lastName.value;
+
+    const response = await api.insertUser({
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      admin: false,
+    });
+
+    alert(response);
   }
 
   render() {
@@ -26,7 +37,7 @@ export default class LoginCard extends Component {
             <div className="d-flex flex-column login-card p-3 p-lg-5">
               <div>
                 <Form onSubmit={(e) => this.handleLogin(e)}>
-                <Form.Group controlId="firstName">
+                  <Form.Group controlId="firstName">
                     <Form.Control
                       type="text"
                       className="login-input"
@@ -40,14 +51,14 @@ export default class LoginCard extends Component {
                       placeholder="Last Name"
                     />
                   </Form.Group>
-                  <Form.Group controlId="formBasicEmail">
+                  <Form.Group controlId="email">
                     <Form.Control
                       type="email"
                       className="login-input"
                       placeholder="Email Address"
                     />
                   </Form.Group>
-                  <Form.Group controlId="formBasicPassword">
+                  <Form.Group controlId="password">
                     <Form.Control
                       type="password"
                       className="login-input"

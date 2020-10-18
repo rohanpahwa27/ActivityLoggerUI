@@ -1,16 +1,26 @@
 import React, { Component } from "react";
 import "./SignupCard.css";
-import { Form, Button, Container, Row, Col, Collapse } from "react-bootstrap";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import api from "../../Api/api.js";
 
 export default class SignupCard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  handleSignup(event) {
+  handleSubmit = async (event) => {
     event.preventDefault();
-    
-  }
+    const email = event.target.elements.email.value;
+    const password = event.target.elements.password.value;
+    const firstName = event.target.elements.firstName.value;
+    const lastName = event.target.elements.lastName.value;
+
+    const response = await api.insertUser({
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      admin: false,
+    });
+
+    alert("success");
+  };
 
   render() {
     return (
@@ -26,8 +36,8 @@ export default class SignupCard extends Component {
             </div>
             <div className="d-flex flex-column signup-card p-3 p-lg-5">
               <div>
-                <Form onSubmit={(e) => this.handleSignup(e)}>
-                <Form.Group controlId="firstName">
+                <Form onSubmit={(e) => this.handleSubmit(e)}>
+                  <Form.Group controlId="firstName">
                     <Form.Control
                       type="text"
                       className="signup-input"
@@ -41,14 +51,14 @@ export default class SignupCard extends Component {
                       placeholder="Last Name"
                     />
                   </Form.Group>
-                  <Form.Group controlId="formBasicEmail">
+                  <Form.Group controlId="email">
                     <Form.Control
                       type="email"
                       className="signup-input"
                       placeholder="Email Address"
                     />
                   </Form.Group>
-                  <Form.Group controlId="formBasicPassword">
+                  <Form.Group controlId="password">
                     <Form.Control
                       type="password"
                       className="signup-input"
