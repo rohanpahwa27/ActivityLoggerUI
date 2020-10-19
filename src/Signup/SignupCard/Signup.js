@@ -65,6 +65,9 @@ export default class SignupCard extends Component {
                       placeholder="Password"
                     />
                   </Form.Group>
+                  <Form.Group controlId="formBasicCheckbox">
+                    <Form.Check type="checkbox" label="Admin" />
+                  </Form.Group>
                   <Button block size="lg" type="submit" className="signup-btn">
                     <span>Sign Up</span>
                   </Button>
