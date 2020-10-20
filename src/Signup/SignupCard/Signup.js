@@ -21,7 +21,12 @@ export default class SignupCard extends Component {
       admin: admin,
     });
 
-    alert("success");
+    if (response.data.status === "error"){
+      alert("Error: " + response.data.message);
+    }
+    else {
+      alert("Account was created successfully!");
+    }
   };
 
   render() {
