@@ -8,7 +8,7 @@ function App() {
   return (
     <Router>
       <Route path="/signup" component={Signup} />
-      <Route path="/login" component={Login} />
+      <Route path="/" component={Login} />
     </Router>
   );
 }

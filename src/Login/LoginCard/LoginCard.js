@@ -1,13 +1,21 @@
 import React, { Component } from "react";
 import "./LoginCard.css";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
+import { Form, Button, Container, Row, Col, Collapse } from "react-bootstrap";
 import api from "../../Api/api.js";
 
 export default class LoginCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { invalidCredentials: false };
+  }
+
   async handleLogin(event) {
     event.preventDefault();
     const email = event.target.elements.email.value;
     const password = event.target.elements.password.value;
+    this.setState({
+      invalidCredentials: true,
+    });
   }
 
   render() {
@@ -39,11 +47,37 @@ export default class LoginCard extends Component {
                       placeholder="Password"
                     />
                   </Form.Group>
+                  <Collapse in={this.state.invalidCredentials}>
+                    <div>
+                      <div className="d-flex flex-row invalid-credentials-container">
+                        <div className="alert-icon-container">
+                          <img
+                            alt=""
+                            src="/alert.png"
+                            width="20"
+                            height="20"
+                            className="d-inline-block align-top"
+                          />
+                        </div>
+                        <div>Unable to log in with provided credentials.</div>
+                      </div>
+                    </div>
+                  </Collapse>
                   <Button block size="lg" type="submit" className="login-btn">
-                    <span>Sign Up</span>
+                    <span>Login</span>
                   </Button>
                 </Form>
               </div>
+            </div>
+            <div>
+              <p className="get-started-text">
+                Don't have an account?{" "}
+                <strong>
+                  <a className="get-started-link" href="/signup">
+                    Get started
+                  </a>
+                </strong>
+              </p>
             </div>
           </Col>
         </Row>
