@@ -13,9 +13,17 @@ export default class LoginCard extends Component {
     event.preventDefault();
     const email = event.target.elements.email.value;
     const password = event.target.elements.password.value;
-    this.setState({
-      invalidCredentials: true,
+
+    const response = await api.loginUser({
+      email: email,
+      password: password,
     });
+
+    if (response.data.status === "error"){
+      this.setState({
+        invalidCredentials: true,
+      });
+    }
   }
 
   render() {
