@@ -20,12 +20,15 @@ class LoggedInHeader extends Component {
         expand="md"
         collapseOnSelect={true}
       >
-        <Navbar.Brand className="pl-1 pl-md-4 home-brand" href="/">
+        <Navbar.Brand className="pl-1 pl-md-4 home-brand" href="/dashboard">
           Activity Logger
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
+            <Nav.Link className="nav-items" href="/dashboard">
+              Dashboard
+            </Nav.Link>
             <Nav.Link className="nav-items" href="/team">
               Team
             </Nav.Link>

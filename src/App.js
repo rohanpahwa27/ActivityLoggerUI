@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Signup from "./Signup/Signup.js";
 import Login from "./Login/Login.js";
 import Team from "./Team/Team.js";
+import Dashboard from "./Dashboard/Dashboard.js"
 import { UserContext } from "./Context/UserContext.js";
 
 class App extends Component {
@@ -32,6 +33,7 @@ class App extends Component {
         <Router>
           <Route path="/signup" component={Signup} />
           <Route path="/team" component={Team} />
+          <Route path="/dashboard" component={Dashboard} />
           <Route exact path="/" component={Login} />
         </Router>
       </UserContext.Provider>
