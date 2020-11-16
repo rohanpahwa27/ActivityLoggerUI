@@ -10,8 +10,15 @@ import { UserContext } from "./Context/UserContext.js";
 class App extends Component {
   constructor(props) {
     super(props);
+    var userObj = null;
+    if(localStorage.getItem('email') !== null){
+      userObj = {
+        email: localStorage.getItem('email'),
+        isAdmin: localStorage.getItem('isAdmin')
+      }
+    }
     this.state = {
-      userObj: null,
+      userObj: userObj,
     };
     this.updateUser = this.updateUser.bind(this);
   }

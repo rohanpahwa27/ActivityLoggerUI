@@ -56,6 +56,7 @@ class LoggedInHeader extends Component {
                     className="pt-3 pb-3"
                     onClick={() => {
                       updateUser(null);
+                      localStorage.clear();
                       this.props.history.push("/");
                     }}
                   >
