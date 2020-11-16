@@ -1,0 +1,16 @@
+.fund-text {
+  font-weight: 700 !important;
+  font-size: 17px;
+}
+
+.company-text {
+  font-weight: 400 !important;
+  font-size: 15px;
+}
+
+.center-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -10,8 +10,7 @@ export default class SignupCard extends Component {
     const password = event.target.elements.password.value;
     const firstName = event.target.elements.firstName.value;
     const lastName = event.target.elements.lastName.value;
-    console.log(event.target.elements.radios.value)
-    const admin = ((event.target.elements.radios.value === 'admin') ? true : false)
+    const admin = event.target.elements.radios.value === "admin" ? true : false;
 
     const response = await api.insertUser({
       email: email,
@@ -21,11 +20,10 @@ export default class SignupCard extends Component {
       admin: admin,
     });
 
-    if (response.data.status === "error"){
+    if (response.data.status === "error") {
       alert("Error: " + response.data.message);
-    }
-    else {
-      alert("Account was created successfully!");
+    } else {
+      window.location.href = "../../Login";
     }
   };
 
@@ -73,14 +71,24 @@ export default class SignupCard extends Component {
                     />
                   </Form.Group>
                   <fieldset>
-                  <Form.Group>
-                 
-                  <Form.Check inline label="Admin" name="radios" value='admin' type="radio" />
-                  <Form.Check inline label="User" name="radios" type="radio" value='user'  />
-                  
-              </Form.Group>
-              </fieldset>
-             
+                    <Form.Group>
+                      <Form.Check
+                        inline
+                        label="Admin"
+                        name="radios"
+                        value="admin"
+                        type="radio"
+                      />
+                      <Form.Check
+                        inline
+                        label="User"
+                        name="radios"
+                        type="radio"
+                        value="user"
+                      />
+                    </Form.Group>
+                  </fieldset>
+
                   <Button block size="lg" type="submit" className="signup-btn">
                     <span>Sign Up</span>
                   </Button>
