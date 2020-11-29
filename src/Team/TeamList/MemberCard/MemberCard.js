@@ -37,20 +37,21 @@ export default class MemberCard extends Component {
                   </div>
                 </Col>
                 <Col sm={4} md={4} lg={4}>
-                  {userObj.isAdmin && this.props.email !== userObj.email ? (
-                    <div className="center-btn">
-                      <Button
-                        variant="outline-danger"
-                        size="sm"
-                        block
-                        onClick={async () => {
-                          await this.removeFromTeam(userObj.email);
-                        }}
-                      >
-                        Remove
-                      </Button>
-                    </div>
-                  ) : null}
+                  {this.props.email !== userObj.email &&
+                    userObj.isAdmin === "true" && (
+                      <div className="center-btn">
+                        <Button
+                          variant="outline-danger"
+                          size="sm"
+                          block
+                          onClick={async () => {
+                            await this.removeFromTeam(userObj.email);
+                          }}
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    )}
                 </Col>
               </Row>
             </Container>

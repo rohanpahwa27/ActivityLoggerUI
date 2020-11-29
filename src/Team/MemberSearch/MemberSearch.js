@@ -55,7 +55,7 @@ export default class MemberSearch extends Component {
     return (
       <UserContext.Consumer>
         {({ userObj, updateUser }) =>
-          userObj.isAdmin ? (
+          userObj.isAdmin === "true" ? (
             <Container>
               <Row>
                 <Col sm={9} md={9} lg={9}>

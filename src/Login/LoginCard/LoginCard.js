@@ -27,8 +27,8 @@ class LoginCard extends Component {
       });
     } else {
       updateUser({ email: email, isAdmin: response.data.user.isAdmin });
-      localStorage.setItem('email', email);
-      localStorage.setItem('isAdmin', response.data.user.isAdmin);
+      localStorage.setItem("email", email);
+      localStorage.setItem("isAdmin", response.data.user.isAdmin);
       this.props.history.push("/dashboard");
     }
   }

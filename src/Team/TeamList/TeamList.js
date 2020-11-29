@@ -26,6 +26,7 @@ export default class TeamList extends Component {
           isAdmin={x.admin}
           email={x.email}
           removeUser={this.props.removeUser}
+          key={x.email}
         />
       );
     }

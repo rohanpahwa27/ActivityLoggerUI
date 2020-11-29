@@ -10,6 +10,7 @@ export const findTeam = (payload) => api.post("/findteam", payload);
 export const searchUser = (payload) => api.post("/search", payload);
 export const addUser = (payload) => api.post("/adduser", payload);
 export const removeUser = (payload) => api.post("/removeuser", payload);
+export const getLogs = (payload) => api.post("/getLogs", payload);
 
 const apis = {
   insertUser,
@@ -18,6 +19,7 @@ const apis = {
   searchUser,
   addUser,
   removeUser,
+  getLogs,
 };
 
 export default apis;
