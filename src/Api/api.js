@@ -11,6 +11,8 @@ export const searchUser = (payload) => api.post("/search", payload);
 export const addUser = (payload) => api.post("/adduser", payload);
 export const removeUser = (payload) => api.post("/removeuser", payload);
 export const getLogs = (payload) => api.post("/getLogs", payload);
+export const getLogsByText = (payload) => api.post("/getLogsByText", payload);
+export const getLogsByRegex = (payload) => api.post("/getLogsByRegex", payload);
 
 const apis = {
   insertUser,
@@ -20,6 +22,8 @@ const apis = {
   addUser,
   removeUser,
   getLogs,
+  getLogsByText,
+  getLogsByRegex,
 };
 
 export default apis;
