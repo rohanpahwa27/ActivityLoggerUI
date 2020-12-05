@@ -32,18 +32,32 @@ class ApplicationCard extends Component {
       <Container className="application-container col-4">
         <Row className="justify-content-center">
           <div className="application-card">
-            <div>
+            <div className="d-flex flex-column">
               <h2>{this.props.application}</h2>
               <p>Type: {this.props.type}</p>
               <p>Reporting: true</p>
-              <Button
-                className="viewLogs float-right"
-                onClick={() => {
-                  this.props.history.push("/dashboard/" + this.props.link);
-                }}
-              >
-                View Logs
-              </Button>
+              <div>
+                <Button
+                  className="viewLogs float-right"
+                  onClick={() => {
+                    this.props.history.push("/dashboard/" + this.props.link);
+                  }}
+                >
+                  View Logs
+                </Button>
+              </div>
+              <div className="pt-3">
+                <Button
+                  className="viewLogs float-right"
+                  onClick={() => {
+                    this.props.history.push(
+                      "/dashboard/" + this.props.link + "/pinned"
+                    );
+                  }}
+                >
+                  View Pinned Logs
+                </Button>
+              </div>
             </div>
           </div>
         </Row>

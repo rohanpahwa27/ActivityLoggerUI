@@ -15,7 +15,11 @@ export default class NoLogResult extends Component {
               className="d-inline-block align-top"
             />
           </div>
-          <div className="pt-3">No logs found. Please try another search.</div>
+          <div className="pt-3">
+            {this.props.pinned
+              ? "No pinned logs found. Go to your dashboard and click view logs to pin logs."
+              : "No logs found. Please try another search."}
+          </div>
         </div>
       </div>
     );

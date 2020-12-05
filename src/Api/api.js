@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5050",
+  baseURL: "http://localhost:5000",
 });
 
 export const insertUser = (payload) => api.post("/signup", payload);
@@ -13,6 +13,11 @@ export const removeUser = (payload) => api.post("/removeuser", payload);
 export const getLogs = (payload) => api.post("/getLogs", payload);
 export const getLogsByText = (payload) => api.post("/getLogsByText", payload);
 export const getLogsByRegex = (payload) => api.post("/getLogsByRegex", payload);
+export const exportLogs = (payload) =>
+  api.post("/exportLogs", { ...payload, responseType: "blob" });
+export const pinLog = (payload) => api.post("/pinLog", payload);
+export const unpinLog = (payload) => api.post("/unpinLog", payload);
+export const getPinnedLogs = (payload) => api.post("/getPinnedLogs", payload);
 
 const apis = {
   insertUser,
@@ -24,6 +29,10 @@ const apis = {
   getLogs,
   getLogsByText,
   getLogsByRegex,
+  exportLogs,
+  pinLog,
+  unpinLog,
+  getPinnedLogs,
 };
 
 export default apis;

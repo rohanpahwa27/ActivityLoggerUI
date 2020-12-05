@@ -6,6 +6,7 @@ import NoLogResult from "./NoLogResult/NoLogResult.js";
 import { Container, Row, Col, Table, Form, Button } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroller";
 import apis from "../Api/api";
+const FileDownload = require("js-file-download");
 
 class LogView extends Component {
   constructor(props) {
@@ -20,9 +21,15 @@ class LogView extends Component {
       newID: 1,
     };
 
+    this.pinnedLogs = new Set();
+
     this.loadItems = this.loadItems.bind(this);
     this.computeColor = this.computeColor.bind(this);
+    this.pinLog = this.pinLog.bind(this);
+    this.exportLog = this.exportLog.bind(this);
   }
+
+  async componentDidMount() {}
 
   async loadItems(page) {
     const app = this.props.match.params.application;
@@ -56,6 +63,8 @@ class LogView extends Component {
         date: resp_logs[i].timestamp,
         content: resp_logs[i].log,
         level: resp_logs[i].level,
+        log_id: resp_logs[i]._id,
+        pinned: false,
       });
     }
 
@@ -85,6 +94,39 @@ class LogView extends Component {
       default:
         return "#343a40";
     }
+  }
+
+  pinLog(idx) {
+    let logs = [...this.state.logs];
+    let log = { ...logs[idx] };
+    log.pinned = true;
+    logs[idx] = log;
+    this.setState({
+      logs: logs,
+    });
+  }
+
+  async exportLog() {
+    const app = this.props.match.params.application;
+    var response = null;
+    if (this.state.searchObj === null) {
+      response = await apis.exportLogs({
+        name: app,
+        text: "",
+      });
+    } else if (this.state.searchObj.type === "text") {
+      response = await apis.exportLogs({
+        name: app,
+        text: this.state.searchObj.text,
+      });
+    } else {
+      response = await apis.exportLogs({
+        name: app,
+        text: this.state.searchObj.text,
+      });
+    }
+
+    FileDownload(response.data, "logs.txt");
   }
 
   render() {
@@ -196,6 +238,15 @@ class LogView extends Component {
                 Show All Logs
               </Button>
             </Col>
+            <Col sm={12} md={12} lg={12} className="pt-3">
+              <Button
+                block
+                variant="outline-success"
+                onClick={() => this.exportLog()}
+              >
+                Export Logs
+              </Button>
+            </Col>
           </Row>
           <Row>
             <Col key={this.state.newID}>
@@ -207,7 +258,7 @@ class LogView extends Component {
                 initialLoad={true}
               >
                 {this.state.logs.length === 0 ? (
-                  <NoLogResult />
+                  <NoLogResult pinned={false} />
                 ) : (
                   <Table striped bordered hover>
                     <thead>
@@ -215,6 +266,7 @@ class LogView extends Component {
                         <th>Level</th>
                         <th>Date</th>
                         <th>Content</th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -239,6 +291,16 @@ class LogView extends Component {
                             </td>
                             <td>{item.date}</td>
                             <td>{item.content}</td>
+                            <td>
+                              <Button
+                                size="sm"
+                                variant="secondary"
+                                disabled={this.state.logs[i].pinned}
+                                onClick={() => this.pinLog(i)}
+                              >
+                                {this.state.logs[i].pinned ? "Pinned" : "Pin"}
+                              </Button>
+                            </td>
                           </tr>
                         );
                       })}
