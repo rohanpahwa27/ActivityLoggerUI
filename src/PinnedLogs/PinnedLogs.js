@@ -21,15 +21,12 @@ class PinnedLogs extends Component {
     this.unpinLog = this.unpinLog.bind(this);
   }
 
-  async loadItems(page) {
-    const app = this.props.match.params.application;
-    var resp_logs = null;
-    const real_page = page - 1;
-    const response = await apis.getLogs({
-      name: app,
-      pageNumber: real_page,
+  async componentDidMount() {
+    const response = await apis.getPinnedLogs({
+      userEmail: localStorage.getItem("email"),
+      application: this.props.match.params.application,
     });
-    resp_logs = response.data.logs;
+    const resp_logs = response.data.logs;
 
     var logs = [];
     for (var i = 0; i < resp_logs.length; i++) {
@@ -37,22 +34,18 @@ class PinnedLogs extends Component {
         date: resp_logs[i].timestamp,
         content: resp_logs[i].log,
         level: resp_logs[i].level,
+        _id: resp_logs[i]._id,
         pinned: true,
       });
     }
 
-    if (logs.length === 0) {
-      this.setState({
-        hasMoreItems: false,
-      });
-      return;
-    }
-
     this.setState({
       logs: [...this.state.logs, ...logs],
-      hasMoreItems: true,
+      hasMoreItems: false,
     });
   }
+
+  async loadItems(page) {}
 
   computeColor(type) {
     switch (type) {
@@ -69,11 +62,17 @@ class PinnedLogs extends Component {
     }
   }
 
-  unpinLog(idx) {
+  async unpinLog(idx) {
     let logs = [...this.state.logs];
+    let log = logs[idx];
     logs.splice(idx, 1);
     this.setState({
       logs: logs,
+    });
+
+    await apis.unpinLog({
+      logID: log._id,
+      userEmail: localStorage.getItem("email"),
     });
   }
 
@@ -94,6 +93,18 @@ class PinnedLogs extends Component {
           }}
           fluid
         >
+          <Row>
+            <Col>
+              <div
+                style={{
+                  paddingBottom: 15,
+                  fontWeight: "bold",
+                }}
+              >
+                Pinned Logs
+              </div>
+            </Col>
+          </Row>
           <Row>
             <Col>
               <InfiniteScroll

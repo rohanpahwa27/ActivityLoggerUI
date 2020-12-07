@@ -15,8 +15,8 @@ export const getLogsByText = (payload) => api.post("/getLogsByText", payload);
 export const getLogsByRegex = (payload) => api.post("/getLogsByRegex", payload);
 export const exportLogs = (payload) =>
   api.post("/exportLogs", { ...payload, responseType: "blob" });
-export const pinLog = (payload) => api.post("/pinLog", payload);
-export const unpinLog = (payload) => api.post("/unpinLog", payload);
+export const pinLog = (payload) => api.post("/pinLogs", payload);
+export const unpinLog = (payload) => api.post("/removePinLogs", payload);
 export const getPinnedLogs = (payload) => api.post("/getPinnedLogs", payload);
 
 const apis = {

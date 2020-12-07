@@ -29,8 +29,6 @@ class LogView extends Component {
     this.exportLog = this.exportLog.bind(this);
   }
 
-  async componentDidMount() {}
-
   async loadItems(page) {
     const app = this.props.match.params.application;
     var resp_logs = null;
@@ -39,6 +37,7 @@ class LogView extends Component {
       const response = await apis.getLogs({
         name: app,
         pageNumber: real_page,
+        userEmail: localStorage.getItem("email"),
       });
       resp_logs = response.data.logs;
     } else if (this.state.searchObj.type === "text") {
@@ -46,6 +45,7 @@ class LogView extends Component {
         name: app,
         pageNumber: real_page,
         text: this.state.searchObj.text,
+        userEmail: localStorage.getItem("email"),
       });
       resp_logs = response.data.logs;
     } else {
@@ -53,6 +53,7 @@ class LogView extends Component {
         name: app,
         pageNumber: real_page,
         text: this.state.searchObj.text,
+        userEmail: localStorage.getItem("email"),
       });
       resp_logs = response.data.logs;
     }
@@ -63,8 +64,8 @@ class LogView extends Component {
         date: resp_logs[i].timestamp,
         content: resp_logs[i].log,
         level: resp_logs[i].level,
-        log_id: resp_logs[i]._id,
-        pinned: false,
+        _id: resp_logs[i]._id,
+        pinned: resp_logs[i].pinned,
       });
     }
 
@@ -96,13 +97,18 @@ class LogView extends Component {
     }
   }
 
-  pinLog(idx) {
+  async pinLog(idx) {
     let logs = [...this.state.logs];
     let log = { ...logs[idx] };
     log.pinned = true;
     logs[idx] = log;
     this.setState({
       logs: logs,
+    });
+
+    await apis.pinLog({
+      logID: log._id,
+      userEmail: localStorage.getItem("email"),
     });
   }
 
